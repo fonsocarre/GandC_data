@@ -41,6 +41,8 @@ indexes2reduce = c(1,2,indexes2reduce)
 reducedData = data[,indexes2reduce]
 names(reducedData) = lapply(names(reducedData), 
                             function(x) tolower(gsub("\\.","",x)))
+reducedData$activity = sapply(reducedData$activity, function(x) activityNames[x])
+rm(data)
 
 # Data summary
 library(dplyr)
@@ -48,3 +50,9 @@ group = group_by(reducedData, individual, activity)
 summ = summarise_each(group, funs(mean, sd))
 # add activity names
 summ$activity = lapply(summ$activity, function(x) activityNames[x])
+
+# Clean up
+rm(group)
+rm(activityNames)
+rm(dataNames)
+rm(indexes2reduce)

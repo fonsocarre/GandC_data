@@ -48,8 +48,6 @@ rm(data)
 library(dplyr)
 group = group_by(reducedData, individual, activity)
 summ = summarise_each(group, funs(mean, sd))
-# add activity names
-summ$activity = lapply(summ$activity, function(x) activityNames[x])
 
 # Clean up
 rm(group)
